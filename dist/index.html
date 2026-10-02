@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Dashboard trình bày kết quả phân loại email spam Enron từ Kaggle." />
+    <title>Enron Spam · Kaggle Results Explorer</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2307132b'/%3E%3Cpath d='M14 20h36v25H14z' fill='none' stroke='%235dd9c1' stroke-width='4'/%3E%3Cpath d='m16 23 16 13 16-13' fill='none' stroke='%23ff7a59' stroke-width='4'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <header class="topbar">
+      <a class="brand" href="#overview" aria-label="Về tổng quan">
+        <span class="brand-mark" aria-hidden="true"><span></span></span>
+        <span><strong>ENRON / NLP</strong><small>KAGGLE RESULTS EXPLORER</small></span>
+      </a>
+      <nav aria-label="Điều hướng chính">
+        <a class="active" href="#overview">Tổng quan</a>
+        <a href="#models">Mô hình</a>
+        <a href="#predictions">Dự đoán</a>
+        <a href="#training">Huấn luyện</a>
+      </nav>
+      <div class="run-stamp"><span></span> Output v4 · sẵn sàng</div>
+    </header>
+
+    <main>
+      <section class="hero" id="overview" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">BÀI TOÁN PHÂN LOẠI NHỊ PHÂN</p>
+          <h1 id="page-title">Phát hiện email spam<br /><em>trên tập Enron.</em></h1>
+          <p class="intro">Một góc nhìn tập trung vào dữ liệu thật: 33.716 email, ba kiến trúc và toàn bộ 5.058 dự đoán test từ phiên chạy Kaggle.</p>
+        </div>
+        <div class="hero-score" aria-label="Chỉ số mô hình tốt nhất">
+          <div class="score-ring" style="--score: 99.98">
+            <div><strong>99,98<sup>%</sup></strong><span>Accuracy</span></div>
+          </div>
+          <p><span class="dot"></span><strong>Word2Vec + LSTM</strong><small>Mô hình dẫn đầu</small></p>
+        </div>
+      </section>
+
+      <section class="kpi-grid" aria-label="Các chỉ số chính">
+        <article class="kpi featured"><span>01 / Quy mô dữ liệu</span><strong id="datasetSize">33.716</strong><p>email sau tiền xử lý</p><div class="mini-split"><i style="width:49.1%"></i><b style="width:50.9%"></b></div><small>16.545 ham · 17.171 spam</small></article>
+        <article class="kpi"><span>02 / Test set</span><strong id="testSize">5.058</strong><p>mẫu được đánh giá</p><small>15% tổng dữ liệu</small></article>
+        <article class="kpi"><span>03 / Recall spam</span><strong>100<sup>%</sup></strong><p>không bỏ sót spam</p><small>cả 3 mô hình</small></article>
+        <article class="kpi"><span>04 / Sai số tốt nhất</span><strong>01</strong><p>email phân loại sai</p><small>trên tập test</small></article>
+      </section>
+
+      <section class="panel model-panel" id="models" aria-labelledby="models-title">
+        <div class="section-head">
+          <div><p class="eyebrow">MODEL BENCHMARK</p><h2 id="models-title">Ba cách biểu diễn, một kết quả rõ ràng.</h2></div>
+          <div class="metric-tabs" role="group" aria-label="Chọn chỉ số so sánh">
+            <button class="active" data-metric="accuracy">Accuracy</button><button data-metric="f1">F1-score</button><button data-metric="auc">ROC-AUC</button>
+          </div>
+        </div>
+        <div class="model-list" id="modelList" aria-live="polite"></div>
+      </section>
+
+      <section class="split-layout" id="predictions">
+        <article class="panel search-panel">
+          <div class="section-head compact"><div><p class="eyebrow">TEST SET EXPLORER</p><h2>Tra cứu dự đoán thật.</h2></div><span class="result-count" id="resultCount">5.058 mẫu</span></div>
+          <label class="search-box"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="Tìm subject, ví dụ: password, meeting…" autocomplete="off" /><kbd>⌘ K</kbd></label>
+          <div class="filter-row" role="group" aria-label="Lọc theo nhãn">
+            <button class="chip active" data-filter="all">Tất cả</button><button class="chip" data-filter="spam">Spam</button><button class="chip" data-filter="ham">Ham</button><button class="chip" data-filter="wrong">Dự đoán sai</button>
+          </div>
+          <div class="sample-list" id="sampleList" aria-live="polite"></div>
+          <div class="pagination"><button id="prevPage" aria-label="Trang trước">Trước</button><span id="pageStatus">1 / 1</span><button id="nextPage" aria-label="Trang sau">Sau</button></div>
+        </article>
+
+        <aside class="panel detail-panel" id="detailPanel" aria-live="polite">
+          <p class="eyebrow">PREDICTION DETAIL</p>
+          <div class="empty-state"><span>↖</span><h3>Chọn một email</h3><p>Xem xác suất spam của từng mô hình và đối chiếu với nhãn thật.</p></div>
+        </aside>
+      </section>
+
+      <section class="split-layout analysis-layout" id="training">
+        <article class="panel training-panel">
+          <div class="section-head compact"><div><p class="eyebrow">LEARNING CURVE</p><h2>LSTM hội tụ sau 8 epoch.</h2></div><div class="legend"><span><i class="train"></i>Train</span><span><i class="validation"></i>Validation</span></div></div>
+          <div class="chart-wrap"><svg id="trainingChart" viewBox="0 0 760 300" role="img" aria-label="Đường accuracy train và validation theo epoch"></svg></div>
+        </article>
+        <article class="panel matrix-panel">
+          <div class="section-head compact"><div><p class="eyebrow">CONFUSION MATRIX</p><h2>Sai ở đâu?</h2></div><select id="matrixModel" aria-label="Chọn mô hình cho ma trận nhầm lẫn"><option value="lstm">Word2Vec + LSTM</option><option value="tfidf">TF-IDF + LR</option><option value="avgW2v">Average W2V + LR</option></select></div>
+          <div class="matrix-shell"><span class="axis y">Nhãn thật</span><div class="matrix" id="matrix"></div><span class="axis x">Nhãn dự đoán</span></div>
+        </article>
+      </section>
+
+      <section class="source-strip" aria-labelledby="source-title">
+        <div><p class="eyebrow">KAGGLE ARTIFACTS</p><h2 id="source-title">Nguồn dữ liệu minh bạch.</h2></div>
+        <p>Dữ liệu trên trang được dựng trực tiếp từ <code>metrics.csv</code>, <code>lstm_history.csv</code>, <code>state.json</code> và <code>test_predictions.csv</code>. Không có số liệu mẫu hoặc xác suất giả lập.</p>
+        <a href="#overview">Về đầu trang</a>
+      </section>
+    </main>
+
+    <footer><span>ENRON SPAM CLASSIFICATION · OUTPUT V4</span><span>33.716 emails / 3 models / 5.058 test predictions</span></footer>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

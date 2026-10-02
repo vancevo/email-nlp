@@ -1,0 +1,54 @@
+{
+  "preprocessing": {
+    "done": true,
+    "rows": 33716,
+    "ham": 16545,
+    "spam": 17171,
+    "exact_full_duplicate_memberships": 17955,
+    "empty_cleaned_rows_removed": 0
+  },
+  "split": {
+    "done": true,
+    "train": 23601,
+    "val": 5057,
+    "test": 5058
+  },
+  "word2vec_cbow": {
+    "done": true,
+    "vocab": 29131
+  },
+  "word2vec_skipgram": {
+    "done": true,
+    "vocab": 29131
+  },
+  "average_w2v_vectors": {
+    "done": true
+  },
+  "integer_sequences": {
+    "done": true,
+    "max_len": 300,
+    "vocab": 29133,
+    "dtype": "int32"
+  },
+  "embedding_matrix": {
+    "done": true,
+    "matched_tokens": 29131
+  },
+  "lstm_training": {
+    "done": true,
+    "epochs_requested": 12
+  },
+  "lstm_text_vectors": {
+    "done": true,
+    "shape": [
+      5058,
+      64
+    ]
+  },
+  "tfidf_logreg": {
+    "done": true
+  },
+  "avg_w2v_logreg": {
+    "done": true
+  }
+}
