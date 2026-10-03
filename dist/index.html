@@ -6,7 +6,7 @@
     <meta name="description" content="Dashboard trình bày kết quả phân loại email spam Enron từ Kaggle." />
     <title>Enron Spam · Kaggle Results Explorer</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2307132b'/%3E%3Cpath d='M14 20h36v25H14z' fill='none' stroke='%235dd9c1' stroke-width='4'/%3E%3Cpath d='m16 23 16 13 16-13' fill='none' stroke='%23ff7a59' stroke-width='4'/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=2" />
   </head>
   <body>
     <div class="noise" aria-hidden="true"></div>
@@ -18,6 +18,7 @@
       <nav aria-label="Điều hướng chính">
         <a class="active" href="#overview">Tổng quan</a>
         <a href="#models">Mô hình</a>
+        <a href="#classifier">Thử phân loại</a>
         <a href="#predictions">Dự đoán</a>
         <a href="#training">Huấn luyện</a>
       </nav>
@@ -56,6 +57,61 @@
         <div class="model-list" id="modelList" aria-live="polite"></div>
       </section>
 
+      <section class="panel classifier-panel" id="classifier" aria-labelledby="classifier-title">
+        <div class="section-head classifier-head">
+          <div>
+            <p class="eyebrow">LIVE EMAIL CLASSIFIER</p>
+            <h2 id="classifier-title">Dán email hoặc tải ảnh chụp.</h2>
+            <p class="section-description">Ảnh được nhận dạng chữ ngay trên trình duyệt. Nội dung sau đó được đối chiếu với ngôn ngữ trong tập Enron để dự đoán spam hoặc ham.</p>
+          </div>
+          <span class="privacy-badge"><i></i> Xử lý tại thiết bị</span>
+        </div>
+
+        <div class="classifier-grid">
+          <div class="composer">
+            <div class="input-tabs" role="tablist" aria-label="Chọn cách nhập email">
+              <button class="input-tab active" id="textTab" role="tab" aria-selected="true" aria-controls="textInputPanel">Nội dung email</button>
+              <button class="input-tab" id="imageTab" role="tab" aria-selected="false" aria-controls="imageInputPanel">Ảnh email</button>
+            </div>
+
+            <div class="input-panel active" id="textInputPanel" role="tabpanel" aria-labelledby="textTab">
+              <label for="emailContent">Subject hoặc toàn bộ nội dung</label>
+              <textarea id="emailContent" rows="9" placeholder="Ví dụ: Congratulations! Claim your free prize now..."></textarea>
+              <div class="text-meta"><span id="characterCount">0 ký tự</span><button class="text-button" id="clearContent" type="button">Xóa nội dung</button></div>
+            </div>
+
+            <div class="input-panel" id="imageInputPanel" role="tabpanel" aria-labelledby="imageTab" hidden>
+              <input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp" hidden />
+              <label class="drop-zone" id="dropZone" for="imageInput">
+                <span class="upload-icon" aria-hidden="true">↥</span>
+                <strong>Thả ảnh email vào đây</strong>
+                <small>hoặc bấm để chọn PNG, JPG, WEBP · tối đa 10 MB</small>
+              </label>
+              <div class="image-preview" id="imagePreview" hidden>
+                <img id="previewImage" alt="Ảnh email đã chọn" />
+                <div><strong id="imageName"></strong><small id="imageSize"></small></div>
+                <button class="text-button" id="removeImage" type="button">Xóa ảnh</button>
+              </div>
+              <div class="ocr-status" id="ocrStatus" aria-live="polite"></div>
+            </div>
+
+            <div class="classifier-actions">
+              <button class="primary-button" id="classifyButton" type="button">Phân loại email <span>→</span></button>
+              <span id="classifierHint">Nhập ít nhất 3 ký tự để bắt đầu.</span>
+            </div>
+          </div>
+
+          <aside class="classifier-result" id="classifierResult" aria-live="polite">
+            <div class="result-placeholder">
+              <span aria-hidden="true">◎</span>
+              <h3>Kết quả sẽ xuất hiện ở đây</h3>
+              <p>Hệ thống trả về nhãn dự đoán, độ tin cậy và những từ ảnh hưởng nhiều nhất.</p>
+            </div>
+          </aside>
+        </div>
+        <p class="classifier-disclaimer"><strong>Lưu ý:</strong> Đây là bộ phân loại demo kết hợp thống kê Naive Bayes từ subject Enron với tín hiệu từ khóa phổ biến, không phải mô hình LSTM gốc và không nên dùng làm bộ lọc email thực tế.</p>
+      </section>
+
       <section class="split-layout" id="predictions">
         <article class="panel search-panel">
           <div class="section-head compact"><div><p class="eyebrow">TEST SET EXPLORER</p><h2>Tra cứu dự đoán thật.</h2></div><span class="result-count" id="resultCount">5.058 mẫu</span></div>
@@ -92,6 +148,6 @@
     </main>
 
     <footer><span>ENRON SPAM CLASSIFICATION · OUTPUT V4</span><span>33.716 emails / 3 models / 5.058 test predictions</span></footer>
-    <script type="module" src="./app.js"></script>
+    <script type="module" src="./app.js?v=4"></script>
   </body>
 </html>

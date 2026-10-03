@@ -2,7 +2,7 @@
 
 ## Enron Spam — Kaggle Results Explorer
 
-Dashboard tĩnh để trình bày và kiểm tra kết quả của notebook Kaggle phân loại email Enron.
+Dashboard tĩnh để trình bày và kiểm tra kết quả của notebook Kaggle phân loại email Enron. Trang còn có khu vực demo cho phép dán nội dung email hoặc tải ảnh chụp email để nhận dạng chữ (OCR) và phân loại spam/ham ngay trên trình duyệt.
 
 ## Chạy local
 
@@ -33,4 +33,6 @@ source-data/          Output nguồn chọn lọc từ Kaggle
 - `state.json`: thống kê tiền xử lý, chia tập và vocabulary.
 - `test_predictions.csv`: 5.058 dự đoán trên tập test.
 
-Ứng dụng không chạy lại mô hình trong trình duyệt. Ô tìm kiếm chỉ tra cứu các mẫu có trong tập test, vì vậy mọi xác suất hiển thị đều lấy trực tiếp từ output Kaggle.
+Các chỉ số, biểu đồ và xác suất trong khu vực tra cứu tập test được lấy trực tiếp từ output Kaggle. Khu vực **Thử phân loại** là một demo riêng: nó kết hợp thống kê Multinomial Naive Bayes nhẹ từ subject có nhãn trong `test_predictions.csv` với nhóm tín hiệu spam/ham phổ biến bằng tiếng Anh và tiếng Việt; ảnh được OCR bằng Tesseract.js. Demo này không phải mô hình LSTM gốc và không dành cho môi trường production.
+
+OCR tải Tesseract.js cùng gói ngôn ngữ Anh + Việt từ CDN ở lần sử dụng đầu tiên, nên tính năng tải ảnh cần kết nối Internet. Nội dung và ảnh không được gửi tới backend của ứng dụng.
