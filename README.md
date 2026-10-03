@@ -1,4 +1,6 @@
-# Enron Spam — Kaggle Results Explorer
+# email-nlp
+
+## Enron Spam — Kaggle Results Explorer
 
 Dashboard tĩnh để trình bày và kiểm tra kết quả của notebook Kaggle phân loại email Enron.
 
